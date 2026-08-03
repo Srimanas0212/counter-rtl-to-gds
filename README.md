@@ -36,32 +36,6 @@ Two synthesis variants are included:
   scan_in/scan_out) for post-silicon testability, followed by ATPG pattern
   generation. This branch was taken through ATPG only, not through P&R.
 
-## Repository Structure
-```
-├── rtl/                        # Counter RTL (Verilog)
-├── testbench/                  # Functional testbench
-├── synthesis/
-│   ├── scripts/                # Genus TCL scripts (basic + DFT/scan)
-│   ├── constraints/             # Input SDC timing constraints
-│   ├── outputs/                 # Synthesized netlists, generated SDC, scan DEF
-│   └── reports/                 # Timing, area, power, gate count reports
-├── lec/
-│   └── screenshots/             # Conformal LEC: RTL vs. synthesized netlist
-│                                 #   equivalence checking (setup, mapping, per-point results)
-├── dft_atpg/                   # Modus ATPG script, scan pin assignments,
-│                                #   post-DFT test netlist, fullscan sim scripts
-├── physical_design/
-│   └── screenshots/             # Innovus flow: import, floorplan, placement,
-│                                 #   CTS, routing, DRC/connectivity signoff, GDS streamout
-├── sta_eco/
-│   ├── hold_optimized.tcl       # ECO script: buffer insertion to fix hold violation
-│   └── screenshots/             # Tempus STA: post-ECO hold summary, path analysis,
-│                                 #   final signoff DRV/glitch summary
-├── timing/                     # Post-synthesis SDF delay file
-├── screenshots/                # Functional sim waveform, synthesized schematics
-└── docs/                       # Additional notes
-```
-
 ## Tools Used
 - **Synthesis & DFT insertion:** Cadence Genus (20.11)
 - **ATPG:** Cadence Modus
@@ -138,26 +112,8 @@ that was caught and corrected, not just re-labeled.
 - **DRC: 0 violations.** **Connectivity verification: 0 violations, 0 warnings.**
 - Routed design streamed out to GDSII successfully
 
-## How to Reproduce
-```bash
-# Basic synthesis
-genus -files synthesis/scripts/synth_basic.tcl
-
-# DFT / scan-chain synthesis
-genus -files synthesis/scripts/synth_dft_scan.tcl
-
-# ATPG (from dft_atpg/)
-modus -files runmodus.atpg.tcl
-
-# Place & route (Innovus, interactive/GUI or scripted equivalent)
-innovus
-```
-
 ## Notes
-- This project was done as part of academic VLSI lab coursework.
-- Standard cell library files and tool-generated session/cache data are
+- Standard cell library files and tool-generated session and cache data are
   excluded since they are institution/tool-licensed, not authored
   deliverables.
-- Physical design results are documented via screenshots (source Innovus
-  session files were not retained), while RTL, synthesis, and DFT/ATPG
-  stages include the actual source files and generated reports.
+- Physical design results are documented via screenshots (source Innovus files could not be retained), while RTL, synthesis, and DFT/ATPG stages include the actual source files and generated reports.
